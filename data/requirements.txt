@@ -1,0 +1,5 @@
+selenium
+webdriver-manager
+sqlalchemy
+psycopg2
+beautifulsoup4
