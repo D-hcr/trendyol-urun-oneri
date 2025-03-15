@@ -19,7 +19,13 @@ def save_product_to_db(details, added_products):
         spf=details["spf"],
         skin_type=details["skin_type"],
         appearance=details["appearance"],
-        extra_features=details["extra_features"]
+        extra_features=details["extra_features"],
+        volume=details["volume"],
+        usage=details["usage"],
+        form=details["form"],
+        type=details["type"],
+        anti_aging=details["anti_aging"],
+        origin=details["origin"]     
     )
 
     db.add(product)
@@ -39,7 +45,7 @@ if __name__ == "__main__":
     saved_count = 0
 
     for link in product_links:
-        if saved_count >= 2:  # İlk 2 üründen sonra dur
+        if saved_count >= 50:  # İlk 2 üründen sonra dur
             break
 
         details = get_product_details(link)

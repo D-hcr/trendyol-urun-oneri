@@ -19,6 +19,9 @@ class ProductInfo(Base):
     volume = Column(String, nullable=True)
     usage = Column(String, nullable=True)
     form = Column(String, nullable=True)
+    type = Column(String, nullable=True)
+    anti_aging = Column(String, nullable=True)
+    origin = Column(String, nullable=True)
 
     reviews = relationship("Review", back_populates="product")
 

@@ -32,23 +32,42 @@ for product_url in product_links[:5]:
     price = product_soup.select_one(".price-item")
     price = price.text.strip().replace("₺", "").replace(",", ".") if price else "0.0"
 
-    attributes = {}
+    # **Özellikleri varsayılan olarak None olarak belirle**
+    attributes = {
+        "SPF": None,
+        "Cilt Tipi": None,
+        "Görünüm": None,
+        "Ek Özellik": None,
+        "Hacim": None,
+        "Kullanma Amacı": None,
+        "Form": None,
+        "Tip": None,
+        "Yaşlanma Karşıtı": None,
+        "Menşei": None
+    }
+
     for attr in product_soup.select("li.detail-attr-item"):
-        key = attr.select_one(".attr-name").text.strip()
-        value = attr.select_one(".attr-value-name-w").text.strip()
-        attributes[key] = value
+        key_element = attr.select_one(".attr-name")
+        value_element = attr.select_one(".attr-value-name-w")
+
+        if key_element and value_element:
+            key = key_element.text.strip()
+            value = value_element.text.strip()
+            attributes[key] = value  # Eğer özellik varsa ekle, yoksa None kalır.
 
     product = ProductInfo(
         product_name=title,
         price=float(price),
-        spf=attributes.get("SPF"),
-        skin_type=attributes.get("Cilt Tipi"),
-        appearance=attributes.get("Görünüm"),
-        type=attributes.get("Ürün Tipi"),
-        extra_features=attributes.get("Ek Özellikler"),
-        volume=attributes.get("Hacim"),
-        usage=attributes.get("Kullanım"),
-        form=attributes.get("Form")
+        spf=attributes["SPF"],
+        skin_type=attributes["Cilt Tipi"],
+        appearance=attributes["Görünüm"],
+        extra_features=attributes["Ek Özellik"],
+        volume=attributes["Hacim"],
+        usage=attributes["Kullanma Amacı"],
+        form=attributes["Form"],
+        type=attributes["Tip"],
+        anti_aging=attributes["Yaşlanma Karşıtı"],
+        origin=attributes["Menşei"]
     )
 
     session.add(product)
